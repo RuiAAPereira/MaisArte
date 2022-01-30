@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="MaisArte.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!--#region Colors-->
+            <Color x:Key="white">#FFFFFF</Color>
+            <Color x:Key="brown">#70554a</Color>
+            <Color x:Key="green">#2381a1</Color>
+            <!--#endregion-->
+
+            <!--#region Icons-->
+            <x:String x:Key="IconHome">&#xe88a;</x:String>
+            <x:String x:Key="IconSearch">&#xe8b6;</x:String>
+            <x:String x:Key="IconCalculate">&#xea5f;</x:String>
+            <x:String x:Key="IconFavorite">&#xe87d;</x:String>
+            <x:String x:Key="IconFavoriteEmpty">&#xe87e;</x:String>
+            <x:String x:Key="IconCamera">&#xe412;</x:String>
+            <x:String x:Key="IconPhotoLibrary">&#xe413;</x:String>
+            <x:String x:Key="IconDelete">&#xe872;</x:String>
+            <x:String x:Key="IconEdit">&#xe3c9;</x:String>
+            <!--#endregion-->
+
+            <!--#region titles-->
+            <Style x:Key="category_title" TargetType="Label">
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+                <Setter Property="TextColor" Value="{StaticResource green}" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="JosefinSans-Bold" />
+                <Setter Property="FontSize" Value="28" />
+            </Style>
+
+            <Style
+                x:Key="category_title_large"
+                BasedOn="{StaticResource category_title}"
+                TargetType="Label">
+                <Setter Property="FontSize" Value="36" />
+            </Style>
+
+            <Style x:Key="category_subtitle" TargetType="Label">
+                <Setter Property="TextColor" Value="Orange" />
+                <Setter Property="FontFamily" Value="JosefinSans-Regular" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <!--#endregion-->
+
+            <!--#region MainTemplate-->
+            <ControlTemplate x:Key="MainTemplate">
+                <Grid ColumnDefinitions="*,*,*" Grid.RowDefinitions="120,*,64,100">
+
+                    <!--<BoxView
+                        Grid.Row="0"
+                        Grid.RowSpan="4"
+                        Grid.ColumnSpan="3"
+                        Margin="0,0,0,-40"
+                        BackgroundColor="#ffffff"
+                        HeightRequest="40"
+                        VerticalOptions="End" />-->
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Margin="32,0,0,0"
+                        FontFamily="JosefinSans-Bold"
+                        FontSize="32"
+                        Text="{TemplateBinding BindingContext.Title}"
+                        TextColor="{StaticResource white}"
+                        VerticalOptions="Center" />
+
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="0,0,32,0"
+                        HeightRequest="52"
+                        HorizontalOptions="End"
+                        ImageSource="logoMaisArte.png"
+                        Scale="0.15"
+                        VerticalOptions="Center"
+                        WidthRequest="52" />
+
+                    <ContentPresenter
+                        x:Name="MainContent"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" />
+
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.ColumnSpan="3"
+                        Margin="32,0"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        VerticalOptions="CenterAndExpand">
+
+                        <Button
+                            BackgroundColor="{StaticResource brown}"
+                            Command="{TemplateBinding BindingContext.BottomButtonCommand}"
+                            CornerRadius="8"
+                            FontFamily="JosefinSans-Bold"
+                            Text="{TemplateBinding BindingContext.BottomButtonText}"
+                            TextColor="{StaticResource white}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <Grid Grid.Row="3" Grid.ColumnSpan="3">
+                        <Path
+                            Aspect="UniformToFill"
+                            Data="M615.59,178.35c-86.88,0-129.26-89.18-129.26-89.18S435.14,14,375,14,263.63,89.17,263.63,89.17s-42.2,89.18-129.26,89.18S0,0,0,0V200H750V0S702.61,178.35,615.59,178.35Z"
+                            Fill="{StaticResource brown}"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill" />
+                    </Grid>
+
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="20,0,0,0"
+                        BackgroundColor="#FFFFFF"
+                        Command="{TemplateBinding BindingContext.GoToCalculationSelectionCommand}"
+                        CornerRadius="24"
+                        FontFamily="MIR"
+                        FontSize="20"
+                        HeightRequest="48"
+                        HorizontalOptions="Center"
+                        Text="{StaticResource IconCalculate}"
+                        TextColor="{StaticResource green}"
+                        VerticalOptions="Center"
+                        WidthRequest="48" />
+
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        BackgroundColor="#FFFFFF"
+                        Command="{TemplateBinding BindingContext.GoHomeCommand}"
+                        CornerRadius="32"
+                        FontFamily="MIR"
+                        FontSize="24"
+                        HeightRequest="64"
+                        HorizontalOptions="Center"
+                        Text="{StaticResource IconHome}"
+                        TextColor="{StaticResource green}"
+                        VerticalOptions="Center"
+                        WidthRequest="64" />
+
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Margin="0,0,20,0"
+                        BackgroundColor="#FFFFFF"
+                        Command="{TemplateBinding BindingContext.GoToFavoriteWorkCommand}"
+                        CornerRadius="24"
+                        FontFamily="MIR"
+                        FontSize="20"
+                        HeightRequest="48"
+                        HorizontalOptions="Center"
+                        Text="{StaticResource IconFavorite}"
+                        TextColor="{StaticResource green}"
+                        VerticalOptions="Center"
+                        WidthRequest="48" />
+                </Grid>
+            </ControlTemplate>
+            <!--#endregion-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

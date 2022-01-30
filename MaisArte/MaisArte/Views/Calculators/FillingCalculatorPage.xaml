@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MaisArte.Views.Calculators.FillingCalculatorPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:numericBox="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+    xmlns:vm="clr-namespace:MaisArte.ViewModels"
+    x:Name="fabricscalculator"
+    BackgroundColor="{StaticResource green}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:FillingCalculatorViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid ColumnDefinitions="*,*,*" Grid.RowDefinitions="120,*,64,100">
+
+        <Label
+            Grid.ColumnSpan="2"
+            Margin="32,0,0,0"
+            FontFamily="JosefinSans-Bold"
+            FontSize="32"
+            Text="Calcular enchimento gasto"
+            TextColor="{StaticResource white}"
+            VerticalOptions="Center" />
+
+        <Button
+            Grid.Column="2"
+            Margin="0,0,32,0"
+            HeightRequest="52"
+            HorizontalOptions="End"
+            ImageSource="logoMaisArte.png"
+            Scale="0.15"
+            VerticalOptions="Center"
+            WidthRequest="52" />
+
+        <StackLayout
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Margin="32,0"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            VerticalOptions="CenterAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <Button
+                    BackgroundColor="{StaticResource brown}"
+                    Command="{Binding CalcularCommand}"
+                    CornerRadius="8"
+                    FontFamily="MIR"
+                    Text="Calcular"
+                    TextColor="{StaticResource white}"
+                    VerticalOptions="Center" />
+                <Button
+                    BackgroundColor="{StaticResource brown}"
+                    Clicked="Clear_Clicked"
+                    CornerRadius="8"
+                    FontFamily="MIR"
+                    Text="Limpar"
+                    TextColor="{StaticResource white}"
+                    VerticalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+
+        <BoxView
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="3"
+            Margin="0,0,0,-40"
+            BackgroundColor="#ffffff"
+            HeightRequest="40"
+            VerticalOptions="End" />
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="3">
+            <Path
+                Aspect="UniformToFill"
+                Data="M615.59,178.35c-86.88,0-129.26-89.18-129.26-89.18S435.14,14,375,14,263.63,89.17,263.63,89.17s-42.2,89.18-129.26,89.18S0,0,0,0V200H750V0S702.61,178.35,615.59,178.35Z"
+                Fill="{StaticResource brown}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill" />
+        </Grid>
+
+        <Frame
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="30,0"
+            BackgroundColor="White"
+            CornerRadius="20">
+            <StackLayout>
+
+                <Label
+                    Padding="0,0,0,5"
+                    FontAttributes="Italic"
+                    FontSize="Body"
+                    HorizontalOptions="Center"
+                    Text="Enchimento Comprado"
+                    TextColor="{StaticResource green}" />
+                <BoxView HeightRequest="1" Color="{StaticResource brown}" />
+
+                <inputLayout:SfTextInputLayout
+                    x:Name="totalPrice"
+                    ContainerType="Outlined"
+                    ErrorColor="Red"
+                    FocusedColor="{StaticResource green}"
+                    HelperText="Preço da peça"
+                    Hint="Valor"
+                    OutlineCornerRadius="8">
+                    <numericBox:SfNumericTextBox FormatString="c" Value="{Binding Preco}" />
+                </inputLayout:SfTextInputLayout>
+
+                <inputLayout:SfTextInputLayout
+                    x:Name="fabricWidht"
+                    ContainerType="Outlined"
+                    ErrorColor="Red"
+                    FocusedColor="{StaticResource green}"
+                    HelperText="Peso comprado em gramas:"
+                    Hint="Peso"
+                    OutlineCornerRadius="8">
+                    <numericBox:SfNumericTextBox FormatString="0.##" Value="{Binding Peso}" />
+                </inputLayout:SfTextInputLayout>
+
+                <Label
+                    Padding="0,20,0,5"
+                    FontAttributes="Italic"
+                    FontSize="Body"
+                    HorizontalOptions="Center"
+                    Text="Peso gasto"
+                    TextColor="{StaticResource green}" />
+                <BoxView HeightRequest="1" Color="{StaticResource brown}" />
+
+                <inputLayout:SfTextInputLayout
+                    x:Name="fabricBoughtWidht"
+                    Grid.Column="0"
+                    ContainerType="Outlined"
+                    ErrorColor="Red"
+                    FocusedColor="{StaticResource green}"
+                    HelperText="Peso gasto em gramas:"
+                    Hint="Peso Gasto"
+                    OutlineCornerRadius="8">
+                    <numericBox:SfNumericTextBox FormatString="0.##" Value="{Binding PesoGasto}" />
+                </inputLayout:SfTextInputLayout>
+
+                <Label
+                    Padding="0,10"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="{Binding Resultado}" />
+            </StackLayout>
+        </Frame>
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="20,0,0,0"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoToCalculationSelectionCommand}"
+            CornerRadius="24"
+            FontFamily="MIR"
+            FontSize="20"
+            HeightRequest="48"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconCalculate}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="48" />
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoHomeCommand}"
+            CornerRadius="32"
+            FontFamily="MIR"
+            FontSize="24"
+            HeightRequest="64"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconHome}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="64" />
+
+        <Button
+            Grid.Column="2"
+            Margin="0,0,20,0"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoToFavoriteWorkCommand}"
+            CornerRadius="24"
+            FontFamily="MIR"
+            FontSize="20"
+            HeightRequest="48"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconFavorite}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="48" />
+    </Grid>
+</ContentPage>

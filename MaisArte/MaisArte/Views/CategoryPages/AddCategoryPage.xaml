@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MaisArte.Views.CategoryPages.AddCategoryPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:vm="clr-namespace:MaisArte.ViewModels.CategoryViewModels"
+    x:Name="addcategory"
+    x:DataType="vm:AddCategoryViewModel"
+    BackgroundColor="{StaticResource green}"
+    ControlTemplate="{StaticResource MainTemplate}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:AddCategoryViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Frame
+            Margin="30,0"
+            BackgroundColor="White"
+            CornerRadius="20">
+            <ScrollView>
+                <StackLayout>
+                    <inputLayout:SfTextInputLayout
+                        x:Name="categoryTitle"
+                        ContainerType="Outlined"
+                        ErrorColor="Red"
+                        FocusedColor="{StaticResource green}"
+                        HelperText="Titulo da categoria *obrigatório"
+                        Hint="Titulo"
+                        OutlineCornerRadius="8">
+                        <inputLayout:SfTextInputLayout.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference titleEntry}, Path=Text.Length}"
+                                TargetType="inputLayout:SfTextInputLayout"
+                                Value="0">
+                                <Setter Property="HasError" Value="True" />
+                                <Setter Property="ErrorText" Value="Email is empty" />
+                            </DataTrigger>
+                        </inputLayout:SfTextInputLayout.Triggers>
+                        <Entry x:Name="titleEntry" Text="{Binding CategoryTitle}" />
+                    </inputLayout:SfTextInputLayout>
+
+                    <inputLayout:SfTextInputLayout
+                        x:Name="categoryDescription"
+                        ContainerType="Outlined"
+                        ErrorColor="Red"
+                        FocusedColor="{StaticResource green}"
+                        HelperText="Breve descrição da categoria"
+                        Hint="Descrição"
+                        OutlineCornerRadius="8">
+                        <Entry Text="{Binding Description}" />
+                    </inputLayout:SfTextInputLayout>
+
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                        <Button
+                            BackgroundColor="{StaticResource green}"
+                            Command="{Binding SelecionarCommand}"
+                            CornerRadius="8"
+                            FontFamily="MIR"
+                            FontSize="20"
+                            HeightRequest="52"
+                            HorizontalOptions="End"
+                            Text="{StaticResource IconPhotoLibrary}"
+                            TextColor="{StaticResource white}"
+                            VerticalOptions="Center"
+                            WidthRequest="52" />
+                        <Button
+                            BackgroundColor="{StaticResource green}"
+                            Command="{Binding CameraCommand}"
+                            CornerRadius="8"
+                            FontFamily="MIR"
+                            FontSize="20"
+                            HeightRequest="52"
+                            HorizontalOptions="End"
+                            Text="{StaticResource IconCamera}"
+                            TextColor="{StaticResource white}"
+                            VerticalOptions="Center"
+                            WidthRequest="52" />
+                    </StackLayout>
+                    <Image
+                        MinimumHeightRequest="200"
+                        MinimumWidthRequest="150"
+                        Source="{Binding SelectedImage}"
+                        WidthRequest="200" />
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

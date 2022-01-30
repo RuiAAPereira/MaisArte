@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MaisArte.Views.WorkPages.FavoriteWorkPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:controls="clr-namespace:EssentialUIKit.Controls"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:syncEffectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:vm="clr-namespace:MaisArte.ViewModels"
+    x:Name="favoriteWorkList"
+    BackgroundColor="{StaticResource green}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:FavoriteWorkViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid ColumnDefinitions="*,*,*" Grid.RowDefinitions="120,*,64,100">
+
+        <Label
+            Grid.ColumnSpan="2"
+            Margin="32,0,0,0"
+            FontFamily="JosefinSans-Bold"
+            FontSize="32"
+            Text="Trabalhos favoritos"
+            TextColor="{StaticResource white}"
+            VerticalOptions="Center" />
+
+        <Button
+            Grid.Column="2"
+            Margin="0,0,32,0"
+            HeightRequest="52"
+            HorizontalOptions="End"
+            ImageSource="logoMaisArte.png"
+            Scale="0.15"
+            VerticalOptions="Center"
+            WidthRequest="52" />
+
+        <StackLayout
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Margin="32,0"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            VerticalOptions="CenterAndExpand">
+
+            <Button
+                BackgroundColor="{StaticResource brown}"
+                Command="{Binding Path=BindingContext.AddCommand, Source={x:Reference favoriteWorkList}}"
+                CornerRadius="8"
+                FontFamily="MIR"
+                Text="Adicionar Trabalho"
+                TextColor="{StaticResource white}"
+                VerticalOptions="Center" />
+        </StackLayout>
+
+        <BoxView
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="3"
+            Margin="0,0,0,-40"
+            BackgroundColor="#ffffff"
+            HeightRequest="40"
+            VerticalOptions="End" />
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="3">
+            <Path
+                Aspect="UniformToFill"
+                Data="M615.59,178.35c-86.88,0-129.26-89.18-129.26-89.18S435.14,14,375,14,263.63,89.17,263.63,89.17s-42.2,89.18-129.26,89.18S0,0,0,0V200H750V0S702.61,178.35,615.59,178.35Z"
+                Fill="{StaticResource brown}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill" />
+        </Grid>
+
+        <StackLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Padding="20,0"
+            Spacing="0">
+
+            <listView:SfListView
+                x:Name="favoriteWorkListView"
+                Padding="15,0,15,0"
+                AutoFitMode="Height"
+                IsScrollBarVisible="false"
+                ItemsSource="{Binding Work, Mode=OneWay}"
+                SelectionBackgroundColor="Transparent"
+                VerticalOptions="FillAndExpand">
+                <listView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--  View of each card item  -->
+                            <controls:CustomShadowFrame
+                                Margin="2,10,5,5"
+                                Padding="0"
+                                BackgroundColor="{StaticResource white}"
+                                BorderColor="{StaticResource white}"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                HasShadow="True"
+                                HorizontalOptions="FillAndExpand"
+                                Radius="4"
+                                VerticalOptions="FillAndExpand">
+
+                                <syncEffectsView:SfEffectsView
+                                    RippleColor="LightGray"
+                                    TouchDownEffects="Ripple"
+                                    TouchUpCommand="{Binding Path=BindingContext.GoToItemListCommand, Source={x:Reference favoriteWorkListView}}"
+                                    TouchUpCommandParameter="{Binding Id}">
+
+                                    <border:SfBorder
+                                        BorderColor="Transparent"
+                                        BorderWidth="0"
+                                        CornerRadius="4">
+                                        <Grid
+                                            ColumnDefinitions="120, *, 25"
+                                            ColumnSpacing="0"
+                                            RowSpacing="0">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="120"
+                                                Source="{Binding Image}"
+                                                WidthRequest="120" />
+                                            <StackLayout
+                                                Grid.Column="1"
+                                                Padding="16"
+                                                HorizontalOptions="FillAndExpand"
+                                                Spacing="0"
+                                                VerticalOptions="FillAndExpand">
+                                                <Label
+                                                    FontFamily="JosefinSans-Bold"
+                                                    FontSize="Title"
+                                                    HorizontalOptions="Start"
+                                                    HorizontalTextAlignment="Start"
+                                                    Text="{Binding Title}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Margin="0,4,0,8"
+                                                    FontFamily="JosefinSans-Regular"
+                                                    FontSize="Body"
+                                                    HorizontalOptions="Start"
+                                                    HorizontalTextAlignment="Start"
+                                                    LineBreakMode="TailTruncation"
+                                                    LineHeight="1.25"
+                                                    MaxLines="2"
+                                                    Text="{Binding Description}" />
+                                                <Label
+                                                    FontFamily="JosefinSans-Regular"
+                                                    FontSize="Small"
+                                                    HorizontalOptions="Start"
+                                                    HorizontalTextAlignment="Start"
+                                                    LineBreakMode="TailTruncation"
+                                                    LineHeight="1.25"
+                                                    MaxLines="1"
+                                                    Text="{Binding Price, StringFormat='Valor {0} €'}" />
+                                            </StackLayout>
+                                            <Image
+                                                Grid.Column="2"
+                                                Margin="0,5,5,0"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="20"
+                                                HorizontalOptions="End"
+                                                Source="{Binding FavoriteIcon}"
+                                                VerticalOptions="Start"
+                                                WidthRequest="20">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.FavoriteCommand, Source={x:Reference favoriteWorkListView}}" CommandParameter="{Binding Id}" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Grid>
+                                    </border:SfBorder>
+                                </syncEffectsView:SfEffectsView>
+                            </controls:CustomShadowFrame>
+                        </ViewCell>
+                    </DataTemplate>
+                </listView:SfListView.ItemTemplate>
+            </listView:SfListView>
+        </StackLayout>
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="20,0,0,0"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoToCalculationSelectionCommand}"
+            CornerRadius="24"
+            FontFamily="MIR"
+            FontSize="20"
+            HeightRequest="48"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconCalculate}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="48" />
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoHomeCommand}"
+            CornerRadius="32"
+            FontFamily="MIR"
+            FontSize="24"
+            HeightRequest="64"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconHome}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="64" />
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            Margin="0,0,20,0"
+            BackgroundColor="#FFFFFF"
+            Command="{Binding GoToFavoriteWorkCommand}"
+            CornerRadius="24"
+            FontFamily="MIR"
+            FontSize="20"
+            HeightRequest="48"
+            HorizontalOptions="Center"
+            Text="{StaticResource IconFavorite}"
+            TextColor="{StaticResource green}"
+            VerticalOptions="Center"
+            WidthRequest="48" />
+    </Grid>
+</ContentPage>

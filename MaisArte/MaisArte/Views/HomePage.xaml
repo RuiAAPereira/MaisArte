@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MaisArte.Views.HomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MaisArte.Models"
+    xmlns:vm="clr-namespace:MaisArte.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="home"
+    x:DataType="vm:HomePageViewModel"
+    BackgroundColor="{StaticResource green}"
+    ControlTemplate="{StaticResource MainTemplate}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:HomePageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <CarouselView
+            x:Name="CategoryCarousel"
+            HorizontalScrollBarVisibility="Never"
+            ItemsSource="{Binding Categories}"
+            PeekAreaInsets="32,0,96,0">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.EmptyView>
+                <StackLayout>
+                    <Label
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        Style="{StaticResource category_subtitle}"
+                        Text="Ainda não foram encontradas &#10; categorias." />
+                    <Label
+                        FontAttributes="Italic"
+                        FontSize="12"
+                        HorizontalOptions="Fill"
+                        HorizontalTextAlignment="Start"
+                        Style="{StaticResource category_subtitle}"
+                        Text="Deseja adicionar uma categoria nova?" />
+                </StackLayout>
+            </CarouselView.EmptyView>
+
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="model:Category">
+                    <Frame
+                        Padding="20"
+                        BackgroundColor="{StaticResource white}"
+                        CornerRadius="15"
+                        HasShadow="False"
+                        IsClippedToBounds="True">
+
+                        <Grid RowSpacing="16">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="48" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.ColumnSpan="2"
+                                Margin="-24,-24,-24,0"
+                                Aspect="Fill"
+                                BackgroundColor="{StaticResource brown}"
+                                Source="{Binding Image}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=BindingContext.GoToWorkListCommand, Source={x:Reference CategoryCarousel}}"
+                                        CommandParameter="{Binding Id}"
+                                        NumberOfTapsRequired="2" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                Style="{StaticResource category_title}"
+                                Text="{Binding Title}" />
+                            <Label
+                                Grid.Row="2"
+                                Grid.ColumnSpan="2"
+                                Style="{StaticResource category_subtitle}"
+                                Text="{Binding Description}"
+                                TextColor="{StaticResource green}" />
+
+                            <StackLayout
+                                Grid.Row="3"
+                                Grid.ColumnSpan="2"
+                                Orientation="Horizontal">
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="5,0"
+                                    BackgroundColor="{StaticResource brown}"
+                                    Command="{Binding Path=BindingContext.EditCommand, Source={x:Reference CategoryCarousel}}"
+                                    CommandParameter="{Binding Id}"
+                                    CornerRadius="24"
+                                    FontFamily="MIR"
+                                    FontSize="20"
+                                    HeightRequest="40"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{StaticResource IconEdit}"
+                                    TextColor="{StaticResource white}"
+                                    VerticalOptions="End"
+                                    WidthRequest="40" />
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="5,0"
+                                    BackgroundColor="{StaticResource brown}"
+                                    Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference CategoryCarousel}}"
+                                    CommandParameter="{Binding Id}"
+                                    CornerRadius="24"
+                                    FontFamily="MIR"
+                                    FontSize="20"
+                                    HeightRequest="40"
+                                    HorizontalOptions="End"
+                                    Text="{StaticResource IconDelete}"
+                                    TextColor="{StaticResource white}"
+                                    VerticalOptions="End"
+                                    WidthRequest="40" />
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </ContentPage.Content>
+</ContentPage>

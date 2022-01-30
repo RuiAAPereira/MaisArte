@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MaisArte.Views.WorkPages.WorkListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:controls="clr-namespace:EssentialUIKit.Controls"
+    xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+    xmlns:model="clr-namespace:MaisArte.Models"
+    xmlns:syncEffectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
+    xmlns:vm="clr-namespace:MaisArte.ViewModels"
+    x:Name="worklist"
+    x:DataType="vm:WorkListViewModel"
+    BackgroundColor="{StaticResource green}"
+    ControlTemplate="{StaticResource MainTemplate}"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:WorkListViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+
+        <listView:SfListView
+            x:Name="WorkListSfView"
+            Padding="15,0,15,0"
+            AutoFitMode="Height"
+            IsScrollBarVisible="false"
+            ItemsSource="{Binding Works, Mode=OneWay}"
+            SelectionBackgroundColor="Transparent"
+            VerticalOptions="FillAndExpand">
+            <listView:SfListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Work">
+                    <ViewCell>
+                        <!--  View of each card item  -->
+                        <controls:CustomShadowFrame
+                            Margin="2,10,5,5"
+                            Padding="0"
+                            BackgroundColor="{StaticResource white}"
+                            BorderColor="{StaticResource white}"
+                            BorderWidth="1"
+                            CornerRadius="10"
+                            HasShadow="True"
+                            HorizontalOptions="FillAndExpand"
+                            Radius="4"
+                            VerticalOptions="FillAndExpand">
+
+                            <syncEffectsView:SfEffectsView
+                                RippleColor="LightGray"
+                                TouchDownEffects="Ripple"
+                                TouchUpCommand="{Binding Path=BindingContext.GoToItemListCommand, Source={x:Reference worklist}}"
+                                TouchUpCommandParameter="{Binding Id}">
+
+                                <border:SfBorder
+                                    BorderColor="Transparent"
+                                    BorderWidth="0"
+                                    CornerRadius="4">
+                                    <Grid
+                                        ColumnDefinitions="120, *, 25"
+                                        ColumnSpacing="0"
+                                        RowSpacing="0">
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HeightRequest="120"
+                                            Source="{Binding Image}"
+                                            WidthRequest="120" />
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Padding="16"
+                                            HorizontalOptions="FillAndExpand"
+                                            Spacing="0"
+                                            VerticalOptions="FillAndExpand">
+                                            <Label
+                                                FontFamily="JosefinSans-Bold"
+                                                FontSize="Title"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding Title}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Margin="0,4,0,8"
+                                                FontFamily="JosefinSans-Regular"
+                                                FontSize="Body"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                LineBreakMode="TailTruncation"
+                                                LineHeight="1.25"
+                                                MaxLines="2"
+                                                Text="{Binding Description}" />
+                                            <Label
+                                                FontFamily="JosefinSans-Regular"
+                                                FontSize="Small"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                LineBreakMode="TailTruncation"
+                                                LineHeight="1.25"
+                                                MaxLines="1"
+                                                Text="{Binding Price, StringFormat='Valor {0} €'}" />
+                                        </StackLayout>
+                                        <Image
+                                            Grid.Column="2"
+                                            Margin="0,5,5,0"
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="20"
+                                            HorizontalOptions="End"
+                                            Source="{Binding FavoriteIcon}"
+                                            VerticalOptions="Start"
+                                            WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Path=BindingContext.FavoriteCommand, Source={x:Reference worklist}}" CommandParameter="{Binding Id}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </border:SfBorder>
+                            </syncEffectsView:SfEffectsView>
+                        </controls:CustomShadowFrame>
+                    </ViewCell>
+                </DataTemplate>
+            </listView:SfListView.ItemTemplate>
+        </listView:SfListView>
+    </StackLayout>
+</ContentPage>
